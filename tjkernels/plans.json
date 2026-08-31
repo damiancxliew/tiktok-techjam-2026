@@ -1,0 +1,132 @@
+{
+  "b64_s128_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b1_s128_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "torch",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b4_s128_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b16_s128_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b128_s128_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": false,
+    "label": "autotuned"
+  },
+  "b10000_s128_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": false,
+    "label": "autotuned"
+  },
+  "b64_s128_d32_h4_f32_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "torch",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b64_s128_d1024_h4_f1024_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "torch",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b64_s128_d128_h1_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b64_s128_d128_h2_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b64_s128_d128_h16_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b64_s32_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": true,
+    "label": "autotuned"
+  },
+  "b64_s1024_d128_h4_f128_l4_causal_float32": {
+    "compute_dtype": "float16",
+    "residual_dtype": "float32",
+    "attn": "triton",
+    "ffn": "triton",
+    "norm": "triton",
+    "packed_qkv": true,
+    "cuda_graph": false,
+    "label": "autotuned"
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "margin": 0.85,
+  "trials": 4,
+  "atol": 0.002,
+  "rtol": 0.02,
+  "seconds": 228.8633954524994,
+  "cases": [
+    {
+      "case": 1,
+      "key": "b64_s128_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 0.9175722757975261,
+      "max_abs": 0.0013349056243896484,
+      "usage": 0.555478036403656,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 2,
+      "key": "b1_s128_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 0.083897598584493,
+      "max_abs": 0.001135021448135376,
+      "usage": 0.4059150516986847,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "torch",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 3,
+      "key": "b4_s128_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 0.12863787015279135,
+      "max_abs": 0.0012322664260864258,
+      "usage": 0.4493449628353119,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 4,
+      "key": "b16_s128_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 0.27187201182047527,
+      "max_abs": 0.0013349056243896484,
+      "usage": 0.4915352761745453,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 5,
+      "key": "b128_s128_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 1.6157290140787761,
+      "max_abs": 0.0013349056243896484,
+      "usage": 0.5851042866706848,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": false,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 6,
+      "key": "b10000_s128_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 113.83067220052084,
+      "max_abs": 0.001668095588684082,
+      "usage": 0.804902970790863,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": false,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 7,
+      "key": "b64_s128_d32_h4_f32_l4_causal_float32",
+      "latency_ms": 0.2826581319173177,
+      "max_abs": 0.002329587936401367,
+      "usage": 0.7042288184165955,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "torch",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 8,
+      "key": "b64_s128_d1024_h4_f1024_l4_causal_float32",
+      "latency_ms": 21.930291748046876,
+      "max_abs": 0.001561284065246582,
+      "usage": 0.6869081258773804,
+      "explored": 6,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "torch",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 9,
+      "key": "b64_s128_d128_h1_f128_l4_causal_float32",
+      "latency_ms": 0.9570645650227865,
+      "max_abs": 0.001314401626586914,
+      "usage": 0.5829855799674988,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 10,
+      "key": "b64_s128_d128_h2_f128_l4_causal_float32",
+      "latency_ms": 0.9064704259236653,
+      "max_abs": 0.0012686848640441895,
+      "usage": 0.5980003476142883,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 11,
+      "key": "b64_s128_d128_h16_f128_l4_causal_float32",
+      "latency_ms": 1.0638901392618816,
+      "max_abs": 0.0014325380325317383,
+      "usage": 0.5814507603645325,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 12,
+      "key": "b64_s32_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 0.2559658686319987,
+      "max_abs": 0.0013349056243896484,
+      "usage": 0.5558006167411804,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": true,
+        "label": "autotuned"
+      }
+    },
+    {
+      "case": 13,
+      "key": "b64_s1024_d128_h4_f128_l4_causal_float32",
+      "latency_ms": 8.797728474934896,
+      "max_abs": 0.0015151500701904297,
+      "usage": 0.555478036403656,
+      "explored": 7,
+      "plan": {
+        "compute_dtype": "float16",
+        "residual_dtype": "float32",
+        "attn": "triton",
+        "ffn": "triton",
+        "norm": "triton",
+        "packed_qkv": true,
+        "cuda_graph": false,
+        "label": "autotuned"
+      }
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+case  1  B=64 S=128 d=128 H=4 F=128  (reference shape)
+    heuristic                ok     0.918 ms   max_abs=1.33e-03  budget=56%  failed=0
+    cuda_graph=False         ok     0.901 ms   max_abs=1.33e-03  budget=56%  failed=0
+    attn=sdpa                ok     0.971 ms   max_abs=1.33e-03  budget=56%  failed=0
+    ffn=torch                ok     0.971 ms   max_abs=1.54e-03  budget=70%  failed=0
+    norm=torch               ok     1.604 ms   max_abs=1.52e-03  budget=56%  failed=0
+    residual_dtype=float16   REJ    0.809 ms   max_abs=8.41e-03  budget=124%  failed=8
+    compute_dtype=float32    ok     1.990 ms   max_abs=1.16e-03  budget=45%  failed=0
+    -> 0.918 ms  max_abs=1.33e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case  2  B=1 S=128 d=128 H=4 F=128  (min batch - launch bound)
+    heuristic                ok     0.094 ms   max_abs=9.46e-04  budget=37%  failed=0
+    cuda_graph=False         ok     0.817 ms   max_abs=9.46e-04  budget=37%  failed=0
+    attn=sdpa                ok     0.112 ms   max_abs=9.46e-04  budget=37%  failed=0
+    ffn=torch                ok     0.084 ms   max_abs=1.14e-03  budget=41%  failed=0
+    norm=torch               ok     0.132 ms   max_abs=1.14e-03  budget=46%  failed=0
+    residual_dtype=float16   REJ    0.084 ms   max_abs=5.08e-03  budget=105%  failed=1
+    compute_dtype=float32    ok     0.165 ms   max_abs=1.16e-03  budget=39%  failed=0
+    -> 0.084 ms  max_abs=1.14e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'torch', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case  3  B=4 S=128 d=128 H=4 F=128  (small batch)
+    heuristic                ok     0.129 ms   max_abs=1.23e-03  budget=45%  failed=0
+    cuda_graph=False         ok     0.965 ms   max_abs=1.23e-03  budget=45%  failed=0
+    attn=sdpa                ok     0.150 ms   max_abs=1.23e-03  budget=45%  failed=0
+    ffn=torch                ok     0.137 ms   max_abs=1.54e-03  budget=49%  failed=0
+    norm=torch               ok     0.193 ms   max_abs=1.23e-03  budget=45%  failed=0
+    residual_dtype=float16   REJ    0.134 ms   max_abs=6.15e-03  budget=91%  failed=0
+    compute_dtype=float32    ok     0.209 ms   max_abs=1.16e-03  budget=45%  failed=0
+    -> 0.129 ms  max_abs=1.23e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case  4  B=16 S=128 d=128 H=4 F=128  (small batch)
+    heuristic                ok     0.272 ms   max_abs=1.33e-03  budget=49%  failed=0
+    cuda_graph=False         ok     0.910 ms   max_abs=1.33e-03  budget=49%  failed=0
+    attn=sdpa                ok     0.287 ms   max_abs=1.33e-03  budget=49%  failed=0
+    ffn=torch                ok     0.278 ms   max_abs=1.54e-03  budget=51%  failed=0
+    norm=torch               ok     0.462 ms   max_abs=1.34e-03  budget=49%  failed=0
+    residual_dtype=float16   REJ    0.254 ms   max_abs=6.15e-03  budget=99%  failed=0
+    compute_dtype=float32    ok     0.574 ms   max_abs=1.16e-03  budget=45%  failed=0
+    -> 0.272 ms  max_abs=1.33e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case  5  B=128 S=128 d=128 H=4 F=128  (large batch)
+    heuristic                ok     1.686 ms   max_abs=1.33e-03  budget=59%  failed=0
+    cuda_graph=False         ok     1.616 ms   max_abs=1.33e-03  budget=59%  failed=0
+    attn=sdpa                ok     1.737 ms   max_abs=1.33e-03  budget=59%  failed=0
+    ffn=torch                ok     1.746 ms   max_abs=1.54e-03  budget=70%  failed=0
+    norm=torch               ok     2.990 ms   max_abs=1.52e-03  budget=58%  failed=0
+    residual_dtype=float16   REJ    1.459 ms   max_abs=8.42e-03  budget=124%  failed=13
+    compute_dtype=float32    ok     4.056 ms   max_abs=1.16e-03  budget=51%  failed=0
+    -> 1.616 ms  max_abs=1.33e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': False, 'label': 'autotuned'}
+
+case  6  B=10000 S=128 d=128 H=4 F=128  (huge batch - bandwidth bound)
+    heuristic                ok   113.831 ms   max_abs=1.67e-03  budget=80%  failed=0
+    cuda_graph=True          ok   121.333 ms   max_abs=1.67e-03  budget=80%  failed=0
+    attn=sdpa                ok   123.190 ms   max_abs=1.67e-03  budget=80%  failed=0
+    ffn=torch                ok   120.354 ms   max_abs=1.88e-03  budget=81%  failed=0
+    norm=torch               ok   217.184 ms   max_abs=1.67e-03  budget=80%  failed=0
+    residual_dtype=float16   REJ  101.034 ms   max_abs=9.85e-03  budget=162%  failed=1328
+    compute_dtype=float32    ok   283.110 ms   max_abs=1.43e-03  budget=58%  failed=0
+    -> 113.831 ms  max_abs=1.67e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': False, 'label': 'autotuned'}
+
+case  7  B=64 S=128 d=32 H=4 F=32  (tiny dim)
+    heuristic                ok     0.297 ms   max_abs=1.93e-03  budget=70%  failed=0
+    cuda_graph=False         ok     1.454 ms   max_abs=1.93e-03  budget=70%  failed=0
+    attn=sdpa                ok     0.394 ms   max_abs=1.93e-03  budget=70%  failed=0
+    ffn=torch                ok     0.283 ms   max_abs=2.33e-03  budget=70%  failed=0
+    norm=torch               ok     0.860 ms   max_abs=2.33e-03  budget=84%  failed=0
+    residual_dtype=float16   REJ    0.263 ms   max_abs=5.26e-03  budget=125%  failed=16
+    compute_dtype=float32    ok     0.885 ms   max_abs=1.39e-03  budget=48%  failed=0
+    -> 0.283 ms  max_abs=2.33e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'torch', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case  8  B=64 S=128 d=1024 H=4 F=1024  (large dim - GEMM bound)
+    heuristic                ok    21.930 ms   max_abs=1.56e-03  budget=69%  failed=0
+    cuda_graph=False         ok    21.553 ms   max_abs=1.56e-03  budget=69%  failed=0
+    attn=sdpa                ok    22.395 ms   max_abs=1.56e-03  budget=69%  failed=0
+    norm=torch               ok    25.521 ms   max_abs=1.48e-03  budget=69%  failed=0
+    residual_dtype=float16   REJ   21.632 ms   max_abs=9.68e-03  budget=111%  failed=29
+    compute_dtype=float32    ok    47.152 ms   max_abs=1.16e-03  budget=50%  failed=0
+    -> 21.930 ms  max_abs=1.56e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'torch', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case  9  B=64 S=128 d=128 H=1 F=128  (single head)
+    heuristic                ok     0.957 ms   max_abs=1.31e-03  budget=58%  failed=0
+    cuda_graph=False         ok     1.441 ms   max_abs=1.31e-03  budget=58%  failed=0
+    attn=sdpa                ok     0.988 ms   max_abs=1.31e-03  budget=58%  failed=0
+    ffn=torch                ok     1.020 ms   max_abs=1.48e-03  budget=62%  failed=0
+    norm=torch               ok     1.640 ms   max_abs=1.31e-03  budget=61%  failed=0
+    residual_dtype=float16   REJ    0.855 ms   max_abs=6.92e-03  budget=124%  failed=10
+    compute_dtype=float32    ok     2.266 ms   max_abs=1.17e-03  budget=50%  failed=0
+    -> 0.957 ms  max_abs=1.31e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case 10  B=64 S=128 d=128 H=2 F=128  (two heads)
+    heuristic                ok     0.906 ms   max_abs=1.27e-03  budget=60%  failed=0
+    cuda_graph=False         ok     1.380 ms   max_abs=1.27e-03  budget=60%  failed=0
+    attn=sdpa                ok     0.932 ms   max_abs=1.27e-03  budget=60%  failed=0
+    ffn=torch                ok     0.978 ms   max_abs=1.53e-03  budget=66%  failed=0
+    norm=torch               ok     1.608 ms   max_abs=1.27e-03  budget=60%  failed=0
+    residual_dtype=float16   REJ    0.815 ms   max_abs=7.17e-03  budget=124%  failed=5
+    compute_dtype=float32    ok     2.156 ms   max_abs=1.29e-03  budget=48%  failed=0
+    -> 0.906 ms  max_abs=1.27e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case 11  B=64 S=128 d=128 H=16 F=128  (16 heads - head_dim 8)
+    heuristic                ok     1.064 ms   max_abs=1.43e-03  budget=58%  failed=0
+    cuda_graph=False         ok     1.192 ms   max_abs=1.43e-03  budget=58%  failed=0
+    attn=sdpa                ok     1.428 ms   max_abs=1.43e-03  budget=58%  failed=0
+    ffn=torch                ok     1.129 ms   max_abs=1.40e-03  budget=56%  failed=0
+    norm=torch               ok     1.769 ms   max_abs=1.43e-03  budget=58%  failed=0
+    residual_dtype=float16   REJ    0.978 ms   max_abs=6.37e-03  budget=124%  failed=7
+    compute_dtype=float32    ok     2.745 ms   max_abs=1.08e-03  budget=48%  failed=0
+    -> 1.064 ms  max_abs=1.43e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case 12  B=64 S=32 d=128 H=4 F=128  (short sequence)
+    heuristic                ok     0.256 ms   max_abs=1.33e-03  budget=56%  failed=0
+    cuda_graph=False         ok     1.426 ms   max_abs=1.33e-03  budget=56%  failed=0
+    attn=sdpa                ok     0.298 ms   max_abs=1.33e-03  budget=56%  failed=0
+    ffn=torch                ok     0.267 ms   max_abs=1.61e-03  budget=65%  failed=0
+    norm=torch               ok     0.434 ms   max_abs=1.34e-03  budget=56%  failed=0
+    residual_dtype=float16   REJ    0.239 ms   max_abs=6.18e-03  budget=120%  failed=4
+    compute_dtype=float32    ok     0.448 ms   max_abs=1.16e-03  budget=45%  failed=0
+    -> 0.256 ms  max_abs=1.33e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': True, 'label': 'autotuned'}
+
+case 13  B=64 S=1024 d=128 H=4 F=128  (long sequence - attention bound)
+    heuristic                ok     9.178 ms   max_abs=1.52e-03  budget=56%  failed=0
+    cuda_graph=False         ok     8.798 ms   max_abs=1.52e-03  budget=56%  failed=0
+    attn=sdpa                ok    11.301 ms   max_abs=1.52e-03  budget=56%  failed=0
+    ffn=torch                ok     9.216 ms   max_abs=1.61e-03  budget=73%  failed=0
+    norm=torch               ok    14.134 ms   max_abs=1.52e-03  budget=54%  failed=0
+    residual_dtype=float16   REJ    8.156 ms   max_abs=9.93e-03  budget=162%  failed=44
+    compute_dtype=float32    ok    32.925 ms   max_abs=1.16e-03  budget=44%  failed=0
+    -> 8.798 ms  max_abs=1.52e-03  {'compute_dtype': 'float16', 'residual_dtype': 'float32', 'attn': 'triton', 'ffn': 'triton', 'norm': 'triton', 'packed_qkv': True, 'cuda_graph': False, 'label': 'autotuned'}
+
+wrote C:\Users\User\Desktop\Projects\techjam2026\tjkernels\plans.json (13 shapes)
+tuning took 229s

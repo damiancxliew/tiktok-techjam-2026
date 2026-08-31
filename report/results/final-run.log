@@ -1,0 +1,143 @@
+########## MAIN SWEEP ##########
+--- case  1  B=64 S=128 d=128 H=4 F=128  (reference shape)
+    PASS  speedup=6.82x  (5.3s)
+--- case  2  B=1 S=128 d=128 H=4 F=128  (min batch - launch bound)
+    PASS  speedup=28.82x  (3.5s)
+--- case  3  B=4 S=128 d=128 H=4 F=128  (small batch)
+    PASS  speedup=18.69x  (3.6s)
+--- case  4  B=16 S=128 d=128 H=4 F=128  (small batch)
+    PASS  speedup=8.53x  (3.8s)
+--- case  5  B=128 S=128 d=128 H=4 F=128  (large batch)
+    PASS  speedup=7.68x  (7.1s)
+--- case  6  B=10000 S=128 d=128 H=4 F=128  (huge batch - bandwidth bound)
+    PASS  speedup=7.79x  (362.8s)
+--- case  7  B=64 S=128 d=32 H=4 F=32  (tiny dim)
+    PASS  speedup=16.24x  (4.0s)
+--- case  8  B=64 S=128 d=1024 H=4 F=1024  (large dim - GEMM bound)
+    PASS  speedup=2.43x  (27.4s)
+--- case  9  B=64 S=128 d=128 H=1 F=128  (single head)
+    PASS  speedup=3.73x  (3.9s)
+--- case 10  B=64 S=128 d=128 H=2 F=128  (two heads)
+    PASS  speedup=5.15x  (4.2s)
+--- case 11  B=64 S=128 d=128 H=16 F=128  (16 heads - head_dim 8)
+    PASS  speedup=14.14x  (7.5s)
+--- case 12  B=64 S=32 d=128 H=4 F=128  (short sequence)
+    PASS  speedup=8.62x  (3.3s)
+--- case 13  B=64 S=1024 d=128 H=4 F=128  (long sequence - attention bound)
+    PASS  speedup=23.65x  (73.7s)
+
+| # | shape (B,S,d,H,F,L) | tokens | accuracy | max_abs | baseline ms | ours ms | speedup |
+|---|---|---:|---|---:|---:|---:|---:|
+| 1 | 64,128,128,4,128,4 | 8,192 | PASS | 1.30e-03 | 6.006 | 0.881 | 6.82x |
+| 2 | 1,128,128,4,128,4 | 128 | PASS | 1.14e-03 | 2.508 | 0.087 | 28.82x |
+| 3 | 4,128,128,4,128,4 | 512 | PASS | 9.83e-04 | 2.468 | 0.132 | 18.69x |
+| 4 | 16,128,128,4,128,4 | 2,048 | PASS | 1.14e-03 | 2.245 | 0.263 | 8.53x |
+| 5 | 128,128,128,4,128,4 | 16,384 | PASS | 1.43e-03 | 12.103 | 1.576 | 7.68x |
+| 6 | 10000,128,128,4,128,4 | 1,280,000 | PASS | 1.67e-03 | 962.897 | 123.562 | 7.79x |
+| 7 | 64,128,32,4,32,4 | 8,192 | PASS | 2.33e-03 | 4.524 | 0.279 | 16.24x |
+| 8 | 64,128,1024,4,1024,4 | 8,192 | PASS | 1.56e-03 | 53.136 | 21.850 | 2.43x |
+| 9 | 64,128,128,1,128,4 | 8,192 | PASS | 1.31e-03 | 3.434 | 0.920 | 3.73x |
+| 10 | 64,128,128,2,128,4 | 8,192 | PASS | 1.27e-03 | 4.591 | 0.891 | 5.15x |
+| 11 | 64,128,128,16,128,4 | 8,192 | PASS | 1.22e-03 | 14.797 | 1.046 | 14.14x |
+| 12 | 64,32,128,4,128,4 | 2,048 | PASS | 1.15e-03 | 2.215 | 0.257 | 8.62x |
+| 13 | 64,1024,128,4,128,4 | 65,536 | PASS | 1.30e-03 | 210.621 | 8.907 | 23.65x |
+
+**13/13 cases benchmarked - geometric-mean speedup 9.34x**
+
+wrote C:\Users\User\Desktop\Projects\techjam2026\report\results\main-20260831-184942.json
+########## CORRECTNESS ##########
+remark: attention.py:35:0: 610 instructions in function
+remark: layernorm.py:31:0: 269 instructions in function
+remark: layernorm.py:31:0: 221 instructions in function
+remark: attention.py:35:0: 610 instructions in function
+remark: layernorm.py:31:0: 325 instructions in function
+remark: ffn.py:22:0: 3010 instructions in function
+remark: layernorm.py:31:0: 269 instructions in function
+remark: layernorm.py:31:0: 223 instructions in function
+remark: attention.py:35:0: 610 instructions in function
+remark: layernorm.py:31:0: 333 instructions in function
+remark: ffn.py:22:0: 3014 instructions in function
+remark: layernorm.py:31:0: 317 instructions in function
+remark: attention.py:35:0: 264 instructions in function
+remark: ffn.py:22:0: 919 instructions in function
+remark: attention.py:35:0: 616 instructions in function
+remark: ffn.py:22:0: 3018 instructions in function
+remark: attention.py:35:0: 703 instructions in function
+PASS  baseline shape, causal, no padding            max_abs=7.79e-04 failed=0/196608
+PASS  padding_ratio=0.3 (prefix mask)               max_abs=7.79e-04 failed=0/196608
+PASS  padding_ratio=0.6 (prefix mask)               max_abs=7.79e-04 failed=0/196608
+PASS  non-causal attention                          max_abs=5.31e-04 failed=0/196608
+PASS  non-causal + padding                          max_abs=5.79e-04 failed=0/196608
+PASS  fp16 model                                    max_abs=3.91e-03 failed=0/196608
+FAIL  bf16 model                                    max_abs=3.12e-02 failed=5745/196608
+PASS  ragged seq_len=37                             max_abs=6.58e-04 failed=0/113664
+PASS  ragged seq_len=1                              max_abs=8.46e-04 failed=0/3072
+PASS  d_model=96, heads=3 (head_dim 32)             max_abs=7.79e-04 failed=0/147456
+PASS  head_dim=8, 16 heads                          max_abs=8.16e-04 failed=0/196608
+PASS  single layer                                  max_abs=5.27e-04 failed=0/196608
+PASS  ffn_dim != d_model                            max_abs=9.94e-04 failed=0/196608
+PASS  batch=1                                       max_abs=9.48e-04 failed=0/24576
+PASS  cpu device (all fallbacks)                    max_abs=7.15e-07 failed=0/4096
+PASS  cuda graph == eager (fresh inputs each call)  max difference 0.00e+00
+
+15/16 checks passed
+########## ABLATION ##########
+=== cumulative ladder ===
+  0 baseline (control)                     case  1  PASS     6.006 ms    1.01x
+  0 baseline (control)                     case  6  PASS   963.879 ms    1.00x
+  0 baseline (control)                     case 13  PASS   210.672 ms    1.00x
+  1 packed QKV + SDPA + fused residual     case  1  PASS     1.764 ms    3.42x
+  1 packed QKV + SDPA + fused residual     case  6  PASS   255.440 ms    3.77x
+  1 packed QKV + SDPA + fused residual     case 13  PASS    17.029 ms   12.37x
+  2 + Triton norm/FFN kernels              case  1  PASS     0.941 ms    6.43x
+  2 + Triton norm/FFN kernels              case  6  PASS   133.825 ms    7.20x
+  2 + Triton norm/FFN kernels              case 13  PASS    11.404 ms   18.48x
+  3 + Triton causal flash attention        case  1  PASS     0.876 ms    6.90x
+  3 + Triton causal flash attention        case  6  PASS   123.466 ms    7.80x
+  3 + Triton causal flash attention        case 13  PASS     8.911 ms   23.64x
+  4 + CUDA Graph capture (full stack)      case  1  PASS     0.896 ms    6.75x
+  4 + CUDA Graph capture (full stack)      case  6  PASS   123.538 ms    7.81x
+  4 + CUDA Graph capture (full stack)      case 13  PASS     9.263 ms   22.73x
+
+=== leave-one-out ===
+  full stack                               case  1  PASS     0.896 ms    6.75x
+  full stack                               case  6  PASS   123.679 ms    7.79x
+  full stack                               case 13  PASS     9.252 ms   22.77x
+  without CUDA Graphs                      case  1  PASS     0.869 ms    6.97x
+  without CUDA Graphs                      case  6  PASS   123.711 ms    7.78x
+  without CUDA Graphs                      case 13  PASS     8.878 ms   23.71x
+  without Triton flash attn                case  1  PASS     0.970 ms    6.24x
+  without Triton flash attn                case  6  PASS   133.683 ms    7.20x
+  without Triton flash attn                case 13  PASS    11.747 ms   17.94x
+  without fused FFN                        case  1  PASS     0.947 ms    6.38x
+  without fused FFN                        case  6  PASS   133.709 ms    7.18x
+  without fused FFN                        case 13  PASS     9.665 ms   21.79x
+  without fused add+LayerNorm              case  1  PASS     1.607 ms    3.76x
+  without fused add+LayerNorm              case  6  PASS   239.231 ms    4.25x
+  without fused add+LayerNorm              case 13  PASS    14.539 ms   14.49x
+  without fp16 compute                     case  1  PASS     1.942 ms    3.11x
+  without fp16 compute                     case  6  PASS   294.363 ms    3.27x
+  without fp16 compute                     case 13  PASS    33.185 ms    6.35x
+
+### Cumulative optimization ladder (speedup vs the reference)
+
+| variant | case 1 | case 6 | case 13 |
+|---|---:|---:|---:|
+| 0 baseline (control) | 1.01x | 1.00x | 1.00x |
+| 1 packed QKV + SDPA + fused residual | 3.42x | 3.77x | 12.37x |
+| 2 + Triton norm/FFN kernels | 6.43x | 7.20x | 18.48x |
+| 3 + Triton causal flash attention | 6.90x | 7.80x | 23.64x |
+| 4 + CUDA Graph capture (full stack) | 6.75x | 7.81x | 22.73x |
+
+### Leave-one-out (full stack minus one component)
+
+| variant | case 1 | case 6 | case 13 |
+|---|---:|---:|---:|
+| full stack | 6.75x | 7.79x | 22.77x |
+| without CUDA Graphs | 6.97x | 7.78x | 23.71x |
+| without Triton flash attn | 6.24x | 7.20x | 17.94x |
+| without fused FFN | 6.38x | 7.18x | 21.79x |
+| without fused add+LayerNorm | 3.76x | 4.25x | 14.49x |
+| without fp16 compute | 3.11x | 3.27x | 6.35x |
+
+########## DONE ##########

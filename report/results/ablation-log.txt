@@ -1,0 +1,69 @@
+=== cumulative ladder ===
+  0 baseline (control)                     case  2  PASS     2.387 ms    1.09x
+  0 baseline (control)                     case  1  PASS     6.009 ms    1.01x
+  0 baseline (control)                     case  6  PASS   966.322 ms    0.99x
+  0 baseline (control)                     case 13  PASS   210.557 ms    1.00x
+  1 packed QKV + SDPA + fused residual     case  2  PASS     1.454 ms    1.90x
+  1 packed QKV + SDPA + fused residual     case  1  PASS     1.766 ms    3.43x
+  1 packed QKV + SDPA + fused residual     case  6  PASS   255.553 ms    3.77x
+  1 packed QKV + SDPA + fused residual     case 13  PASS    17.037 ms   12.36x
+  2 + Triton norm/FFN kernels              case  2  PASS     1.008 ms    2.48x
+  2 + Triton norm/FFN kernels              case  1  PASS     0.934 ms    6.48x
+  2 + Triton norm/FFN kernels              case  6  PASS   133.007 ms    7.23x
+  2 + Triton norm/FFN kernels              case 13  PASS    11.364 ms   18.51x
+  3 + Triton causal flash attention        case  2  PASS     0.897 ms    2.83x
+  3 + Triton causal flash attention        case  1  PASS     0.860 ms    7.04x
+  3 + Triton causal flash attention        case  6  PASS   123.721 ms    7.76x
+  3 + Triton causal flash attention        case 13  PASS     8.848 ms   23.79x
+  4 + CUDA Graph capture (full stack)      case  2  PASS     0.137 ms   17.96x
+  4 + CUDA Graph capture (full stack)      case  1  PASS     0.885 ms    6.83x
+  4 + CUDA Graph capture (full stack)      case  6  PASS   123.803 ms    7.76x
+  4 + CUDA Graph capture (full stack)      case 13  PASS     9.251 ms   22.75x
+
+=== leave-one-out ===
+  full stack                               case  2  PASS     0.114 ms   21.63x
+  full stack                               case  1  PASS     0.896 ms    6.76x
+  full stack                               case  6  PASS   123.564 ms    7.78x
+  full stack                               case 13  PASS     9.248 ms   22.77x
+  without CUDA Graphs                      case  2  PASS     1.228 ms    3.20x
+  without CUDA Graphs                      case  1  PASS     0.862 ms    7.02x
+  without CUDA Graphs                      case  6  PASS   123.610 ms    7.76x
+  without CUDA Graphs                      case 13  PASS     8.876 ms   23.70x
+  without Triton flash attn                case  2  PASS     0.117 ms   21.91x
+  without Triton flash attn                case  1  PASS     0.970 ms    6.24x
+  without Triton flash attn                case  6  PASS   133.642 ms    7.18x
+  without Triton flash attn                case 13  PASS    11.744 ms   17.93x
+  without fused FFN                        case  2  PASS     0.087 ms   28.55x
+  without fused FFN                        case  1  PASS     0.952 ms    6.36x
+  without fused FFN                        case  6  PASS   133.647 ms    7.17x
+  without fused FFN                        case 13  PASS     9.634 ms   21.84x
+  without fused add+LayerNorm              case  2  PASS     0.139 ms   17.45x
+  without fused add+LayerNorm              case  1  PASS     1.608 ms    3.77x
+  without fused add+LayerNorm              case  6  PASS   238.900 ms    4.03x
+  without fused add+LayerNorm              case 13  PASS    14.519 ms   14.50x
+  without fp16 compute                     case  2  PASS     0.170 ms   14.04x
+  without fp16 compute                     case  1  PASS     1.935 ms    3.13x
+  without fp16 compute                     case  6  PASS   295.379 ms    3.23x
+  without fp16 compute                     case 13  PASS    33.136 ms    6.35x
+
+### Cumulative optimization ladder (speedup vs the reference)
+
+| variant | case 2 | case 1 | case 6 | case 13 |
+|---|---:|---:|---:|---:|
+| 0 baseline (control) | 1.09x | 1.01x | 0.99x | 1.00x |
+| 1 packed QKV + SDPA + fused residual | 1.90x | 3.43x | 3.77x | 12.36x |
+| 2 + Triton norm/FFN kernels | 2.48x | 6.48x | 7.23x | 18.51x |
+| 3 + Triton causal flash attention | 2.83x | 7.04x | 7.76x | 23.79x |
+| 4 + CUDA Graph capture (full stack) | 17.96x | 6.83x | 7.76x | 22.75x |
+
+### Leave-one-out (full stack minus one component)
+
+| variant | case 2 | case 1 | case 6 | case 13 |
+|---|---:|---:|---:|---:|
+| full stack | 21.63x | 6.76x | 7.78x | 22.77x |
+| without CUDA Graphs | 3.20x | 7.02x | 7.76x | 23.70x |
+| without Triton flash attn | 21.91x | 6.24x | 7.18x | 17.93x |
+| without fused FFN | 28.55x | 6.36x | 7.17x | 21.84x |
+| without fused add+LayerNorm | 17.45x | 3.77x | 4.03x | 14.50x |
+| without fp16 compute | 14.04x | 3.13x | 3.23x | 6.35x |
+

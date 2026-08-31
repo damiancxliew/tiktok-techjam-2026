@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.triton/
+*.ncu-rep
+*.nsys-rep
+.vscode/
+.idea/
