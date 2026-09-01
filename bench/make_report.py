@@ -57,7 +57,11 @@ def gpu_info() -> Dict[str, str]:
             capture_output=True, text=True, timeout=20,
         )
         if out.returncode == 0:
-            info["driver"] = out.stdout.strip()
+            # On a multi-GPU host nvidia-smi prints one identical line per
+            # device; take the first rather than concatenating all of them.
+            lines = [ln.strip() for ln in out.stdout.splitlines() if ln.strip()]
+            if lines:
+                info["driver"] = lines[0]
     except Exception:
         pass
     return info
@@ -65,7 +69,9 @@ def gpu_info() -> Dict[str, str]:
 
 def cpu_name() -> str:
     """platform.processor() returns a family/model string on Windows; the
-    marketing name is more useful in a hardware table."""
+    marketing name is more useful in a hardware table. On Linux, read the
+    actual model name from /proc/cpuinfo instead of falling back to the bare
+    architecture string platform.processor() gives there."""
     try:
         out = subprocess.run(
             ["wmic", "cpu", "get", "name"], capture_output=True, text=True, timeout=20
@@ -75,6 +81,14 @@ def cpu_name() -> str:
             return lines[1]
     except Exception:
         pass
+    if platform.system() == "Linux":
+        try:
+            with open("/proc/cpuinfo") as f:
+                for line in f:
+                    if line.startswith("model name"):
+                        return line.split(":", 1)[1].strip()
+        except Exception:
+            pass
     return platform.processor() or "unknown"
 
 
